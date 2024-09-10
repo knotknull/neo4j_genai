@@ -1,0 +1,77 @@
+
+Knowledge graph components:
+
+
+Nodes       : entities in the graph
+Relationship: associations or interactions between nodes
+Properties  : attributes of notes or relationship
+
+
+
+
+    Name:  Joe                       Name:  Mary
+    Born:  1/1/1980                  Born:  1/1/1985
+    Twitter: @joejoe                 Twitter: @YoMary
+    +-----------+                   +-----------+
+    |           |   ----knows--->   |           |
+    |  Person   |   <---knows----   |  Person   |
+    |           |  --lives with-->  |           |
+    +-----------+                   +-----------+
+              \                         /
+       drives  \                      / owns
+                 \                   /
+                   v               v
+                     +-----------+                   
+                     |           |                   
+                     |    Car    |                   
+                     |           |                   
+                     +-----------+                   
+                     Brand:  Volvo                      
+                     Model:  V70
+                     Description:  .....
+
+cypher: expressive query language
+
+MATCH (p:Person{name:"Joe"}) -[:MARRIED_TO]->(spouse)
+    p= variable                relationship    variable
+    Person = label              type
+    name = property 
+RETURN p.name as husband, spouse    
+
+                                                         +-----------+                      
+                                                        ^|           | name
+Data Model                                  VARIANT_OF / |  Product  | type
+                                                      /  |           | group
+    +-----------+                      +-----------+ /   +-----------+  description
+    |           |   ----Purchased--->  |           |
+    |  Customer |         tDat         |  Article  |
+    |           |                      |           |
+    +-----------+                      +-----------+\
+      customerId                            Color    \ FROM_DEPARTMENT
+                                                      \ 
+                                                       v
+                                                        +------------+
+                                                        |            |   
+                                                        | Department |   
+                                                        |            |   
+                                                        +------------+   
+
+
+Embeddings: 
+ - type of data compression
+ - transform (text, images, audio, etc) into a compact format for ML algo
+ - numeric vecotrs (arrays) with 100s or 1000s of elements
+ - Preserve info such that "similar" items have proprtionally "similar" embedding vectors
+ - Similarity is measured with vecto algos 
+     (cosine, euclidean)
+
+Neo4j indexes:
+ - Range: general index for predicates based on equiality and range
+ - Point: Predicts on geospatial points like distance bounding boxes, etc
+ - Text:  Predicates on strings like contains, ends with, etc.
+ - FullText:  Text search based on tekenization and anlyzers
+ - Vector: Approximate nearest neighbor search on vectors
+
+ Similarity measured by:
+    Euclidean: distance based
+    Cosine   : direction / angle based
